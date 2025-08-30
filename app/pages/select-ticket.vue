@@ -9,7 +9,7 @@
               <h2 class="font-[700] text-[#F9FAFB] text-[2rem]">
                 {{ $t("select_ticket") }}
               </h2>
-              <p class="text-[#9CA3AF]">(max tickets: 12)</p>
+              <p class="text-[#9CA3AF]">({{ $t("max_tickets") }}: 12)</p>
             </div>
             <div
               class="flex bg-[#141414] text-white gap-2 rounded-[12px] px-[18px] py-[12px]"
@@ -89,7 +89,7 @@
           </div>
         </div>
         <div
-          class="flex-1 flex flex-col gap-4 max-w-[490px] rounded-[20px] bg-[#141414] p-[23px]"
+          class="flex-1 flex flex-col gap-4 max-w-[490px] rounded-[20px] bg-[#141414] p-[23px] h-fit"
         >
           <div class="flex items-center justify-between gap-5">
             <div class="min-w-[170px] h-[146px] rounded-[12px] overflow-hidden">
@@ -125,7 +125,7 @@
 
           <div class="flex gap-4 !p-4 w-full justify-between">
             <div class="flex flex-col items-center">
-              <p class="text-base text-[#9CA3AF]">Price From</p>
+              <p class="text-base text-[#9CA3AF]">{{ $t("price_from") }}</p>
               <p class="text-[#8EF251] text-[1.5rem] font-[700]">450 SAR</p>
             </div>
             <button
