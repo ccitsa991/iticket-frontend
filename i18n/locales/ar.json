@@ -1,0 +1,21 @@
+{
+  "sign_in_to_account": "تسجيل الدخول إلى حسابك",
+  "welcome_back": "أهلاً! مرحباً بعودتك",
+  "sign_in": "تسجيل الدخول",
+  "best_place": "أفضل مكان للعثور على الأحداث التي تحبها.",
+  "forgot_password": "نسيت كلمة المرور؟",
+  "first_name": "الاسم",
+  "have_account": "هل لديك حساب؟",
+  "create_account": "إنشاء حساب",
+  "or": "أو",
+  "sign_in_with_google": "تسجيل الدخول باستخدام جوجل",
+  "sign_up_with_google": "إنشاء حساب باستخدام جوجل",
+  "dont_have_account": "ليس لديك حساب؟",
+  "sign_up": "إنشاء حساب",
+  "enter_item": "أدخل {item}",
+  "email": "البريد الإلكتروني",
+  "phone_number": "رقم الهاتف",
+  "field_required": "{field} مطلوب",
+  "field_invalid": "{field} غير صحيح",
+  "password": "كلمة المرور"
+}
