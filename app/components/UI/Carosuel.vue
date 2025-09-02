@@ -1,8 +1,5 @@
 <template>
-  <Carousel
-  iconArrowLeft: chevronLeft,
-  
-  v-bind="mergedConfig">
+  <Carousel v-bind="mergedConfig">
     <Slide v-for="(item, index) in items" :key="getSlideKey(item, index)">
       <slot :item="item" :index="index">
         <div class="default-slide">
@@ -23,8 +20,7 @@
 <script setup>
 import "vue3-carousel/carousel.css";
 import { Carousel, Slide } from "vue3-carousel";
-import chevronLeft from "@/assets/icons/chevron-left.svg";
-import { computed, reactive } from "vue";
+import { computed } from "vue";
 import { Pagination as CarouselPagination } from "vue3-carousel";
 import { Navigation as CarouselNavigation } from "vue3-carousel";
 
@@ -43,29 +39,40 @@ const props = defineProps({
   pauseAutoplayOnHover: { type: Boolean, default: true },
 });
 
-const defaultConfig = reactive({
-  gap: props.gap,
-  height: props.height,
-  itemsToShow: props.itemsToShow,
-  snapAlign: props.snapAlign,
-  autoplay: props.autoplay,
-  wrapAround: props.wrapAround,
-  pauseAutoplayOnHover: props.pauseAutoplayOnHover,
-  breakpoints: {
-    768: { itemsToShow: 1, snapAlign: "center" },
-    1024: { itemsToShow: Math.min(2, props.itemsToShow), snapAlign: "center" },
-    1280: { itemsToShow: Math.min(3, props.itemsToShow), snapAlign: "center" },
-  },
-});
+// Use toRefs for better reactivity control
+import { toRefs } from "vue";
 
-const mergedConfig = computed(() => ({
-  ...defaultConfig,
-  ...props.config,
-  breakpoints: {
-    ...defaultConfig.breakpoints,
-    ...(props.config.breakpoints || {}),
-  },
-}));
+const mergedConfig = computed(() => {
+  const baseConfig = {
+    gap: props.gap,
+    height: props.height,
+    itemsToShow: props.itemsToShow,
+    snapAlign: props.snapAlign,
+    autoplay: props.autoplay,
+    wrapAround: props.wrapAround,
+    pauseAutoplayOnHover: props.pauseAutoplayOnHover,
+    breakpoints: {
+      768: { itemsToShow: 1, snapAlign: "center" },
+      1024: {
+        itemsToShow: Math.min(2, props.itemsToShow),
+        snapAlign: "center",
+      },
+      1280: {
+        itemsToShow: Math.min(3, props.itemsToShow),
+        snapAlign: "center",
+      },
+    },
+  };
+
+  return {
+    ...baseConfig,
+    ...props.config,
+    breakpoints: {
+      ...baseConfig.breakpoints,
+      ...(props.config.breakpoints || {}),
+    },
+  };
+});
 
 // Helper function to get slide key
 const getSlideKey = (item, index) => {
@@ -73,22 +80,31 @@ const getSlideKey = (item, index) => {
     return item[props.keyField];
   return index;
 };
+
+// Computed property for height to avoid reactivity issues in CSS
+const carouselHeight = computed(() => {
+  const height =
+    typeof props.height === "number"
+      ? props.height
+      : parseInt(props.height) || 800;
+  return `${height}px`;
+});
 </script>
 
 <style lang="scss" scoped>
 .carousel {
-  --vc-carousel-height: calc(v-bind(height) * 1px) !important;
+  --vc-carousel-height: v-bind(carouselHeight) !important;
 }
 
 .navigation {
   :deep() {
     button {
-      background-image: url('@/assets/icons/arrow-right.svg');
+      background-image: url("@/assets/icons/arrow-right.svg");
       background-repeat: no-repeat;
       background-position: center;
 
-      &.carousel__prev  {
-        background-image: url('@/assets/icons/arrow-left.svg');
+      &.carousel__prev {
+        background-image: url("@/assets/icons/arrow-left.svg");
       }
       svg {
         display: none;
